@@ -50,7 +50,7 @@ cluster_search = function(hClust, varMat, sizeMin) {
       # Set defult value to 0
       avgVal = 0
       # Calculate the average value if the minimum number of features is met
-      if (count > sizeMin) {
+      if (count >= sizeMin) {
         varMatGroup = varMat[group, group]
         # Calculates the average value in the matrix excluding the diagonal
         avgVal = sum(varMatGroup) / (count * (count - 1))
