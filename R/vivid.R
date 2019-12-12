@@ -16,6 +16,7 @@
 #' @param gamma gamma value for EBIC.
 #' @importFrom furrr future_options
 #' @importFrom magrittr %>%
+#' @importFrom parallel detectCores
 #'
 #' @return
 #' @export
@@ -27,10 +28,11 @@ vivid =
            y,
            bootstraps = 100,
            cores = parallel::detectCores() - 1,
+           crossfold = 10,
            seed = 1234567,
            minSize = 2,
            lambda = 'lambda.1se',
-           compareMethod = 'EBIC',
+           compareMethod = 'BIC',
            gamma = 1) {
     # string to factor function
     if (base::is.vector(y)) {
@@ -60,7 +62,7 @@ vivid =
       stats::rexp(nObs * bootstraps),
       nrow = bootstraps,
       ncol = nObs,
-      byrow = T
+      byrow = TRUE
     )
     mWeights = mWeights / base::rowSums(mWeights) * nObs
 
@@ -72,7 +74,11 @@ vivid =
                  workers = cores)
 
     bootstraps = furrr::future_map(lWeights,
-                                   ~ vivid_reg(.x, x, y, crossfold = 10, lambda = lambda),
+                                   ~ vivid_reg(.x, 
+                                               x = x, 
+                                               y = y, 
+                                               crossfold = crossfold, 
+                                               lambda = lambda),
                                    .options = future_options(seed = TRUE))
 
     bootVal = vivid_df(bootstraps)
