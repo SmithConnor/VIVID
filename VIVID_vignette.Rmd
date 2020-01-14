@@ -129,9 +129,9 @@ vivid.sacurine <- vivid(x = dat,
                         y = outcomes,
                         bootstraps = 75,
                         cores = detectCores() - 1,
-                        seed = 1111111,
+                        seed = 1234567,
                         lambda = 'lambda.min',
-                        compare_method = 'BIC')
+                        compareMethod = 'BIC')
 ```
 
 The function returns the following outputs:
@@ -157,13 +157,13 @@ vivid.sacurine$coefficients
 ### Variance matrix
 
 ```{r eval = FALSE}
-vivid.sacurine$var_mat
+vivid.sacurine$varMat
 ```
 
 ### Clustering
 
 ```{r eval = FALSE}
-vivid.sacurine$var_clust
+vivid.sacurine$varClust
 ```
 
 ### Feature group selection (Boolean)
@@ -181,25 +181,25 @@ vivid.sacurine$sizes
 ### Method of comparison
 
 ```{r eval = FALSE}
-vivid.sacurine$compare_method
+vivid.sacurine$compareMethod
 ```
 
 ### Comparison values
 
 ```{r eval = FALSE}
-vivid.sacurine$compare_values
+vivid.sacurine$compareValues
 ```
 
 ### Best feature group (Boolean)
 
 ```{r eval = FALSE}
-vivid.sacurine$opt_model
+vivid.sacurine$optModel
 ```
 
 ### Best feature group (Names)
 
 ```{r eval = FALSE}
-vivid.sacurine$opt_features
+vivid.sacurine$optFeatures
 ```
 
 ## Number of features returned
@@ -211,7 +211,7 @@ If the number of features returned is to small, there are several options on how
 ```{r eval = FALSE}
 # Minimum number of final features set to 10
 vivid_adj(vivid.sacurine, 
-          min_final_features = 10)
+          minFinalFeatures = 10)
 ```
 
 2. Instead of running the VIVID function all over again, there is simple code to change the objective function used. To complete this use the following function:
@@ -221,7 +221,7 @@ vivid_adj(vivid.sacurine,
 vivid.saccurinenew <- vivid_crit(vivid.sacurine,
                                  x = dat,
                                  y = outcomes,
-                                 method = "AIC")
+                                 metric = "AIC")
 ```
 
 ## Large number of features
