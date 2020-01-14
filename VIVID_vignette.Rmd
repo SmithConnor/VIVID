@@ -66,7 +66,9 @@ install.packages('stringr')
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 BiocManager::install("ropls") #sacurine data
+```
 
+```{r}
 library('latticeExtra')
 library('tidyverse')
 library('furrr')
@@ -84,7 +86,7 @@ Once all these packages have been installed, **VIVID** is ready to be installed.
 
 We first load the **VIVID** package:
 
-```{r eval=FALSE}
+```{r}
 library(VIVID)
 ```
 
@@ -93,8 +95,9 @@ library(VIVID)
 
 The first step is to identify all the features to be included in the comparison. Since no pre-filtering step is being implemented we will use all features.
 
-```{r eval = FALSE}
-data("sacurine")
+```{r}
+sacurine = readRDS("sacurine.rds")
+
 
 dat <- sacurine$dataMatrix
 outcomes <- sacurine$sampleMetadata$gender
@@ -124,7 +127,7 @@ If no input is given, then each feature will resort to their default values:
 - min_size = 2
 
 
-```{r eval = FALSE}
+```{r}
 vivid.sacurine <- vivid(x = dat,
                         y = outcomes,
                         bootstraps = 75,
@@ -150,55 +153,55 @@ The function returns the following outputs:
 
 ### Coefficients
 
-```{r eval = FALSE}
+```{r}
 vivid.sacurine$coefficients
 ```
 
 ### Variance matrix
 
-```{r eval = FALSE}
+```{r}
 vivid.sacurine$varMat
 ```
 
 ### Clustering
 
-```{r eval = FALSE}
+```{r}
 vivid.sacurine$varClust
 ```
 
 ### Feature group selection (Boolean)
 
-```{r eval = FALSE}
+```{r}
 vivid.sacurine$selection
 ```
 
 ### Feature group sizes
 
-```{r eval = FALSE}
+```{r}
 vivid.sacurine$sizes
 ```
 
 ### Method of comparison
 
-```{r eval = FALSE}
+```{r}
 vivid.sacurine$compareMethod
 ```
 
 ### Comparison values
 
-```{r eval = FALSE}
+```{r}
 vivid.sacurine$compareValues
 ```
 
 ### Best feature group (Boolean)
 
-```{r eval = FALSE}
+```{r}
 vivid.sacurine$optModel
 ```
 
 ### Best feature group (Names)
 
-```{r eval = FALSE}
+```{r}
 vivid.sacurine$optFeatures
 ```
 
@@ -241,9 +244,9 @@ vivid.sacurine_split <- vivid_split(x = dat,
                         y = outcomes,
                         bootstraps = 75,
                         cores = detectCores() - 1,
-                        seed = 1111111,
+                        seed = 1234567,
                         lambda = 'lambda.min',
-                        compare_method = 'BIC',
+                        compareMethod = 'BIC',
                         groups = 5,
                         disjoint = TRUE)
 ```
