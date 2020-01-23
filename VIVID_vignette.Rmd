@@ -68,7 +68,7 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
 BiocManager::install("ropls") #sacurine data
 ```
 
-```{r}
+```{r warning=FALSE, message=FALSE}
 library('latticeExtra')
 library('tidyverse')
 library('furrr')
